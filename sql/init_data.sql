@@ -1,5 +1,5 @@
 -- 初始数据
-use mianshiya;
+use mianshigua;
 
 -- 用户表初始数据（密码是 12345678）
 INSERT INTO user (id, userAccount, userPassword, unionId, mpOpenId, userName, userAvatar, userProfile, userRole)
@@ -17,27 +17,27 @@ VALUES (1, 'user1', 'b0dd3697a192885d7c055db46155b26a', 'unionId1', 'mpOpenId1',
 -- 题库表初始数据
 INSERT INTO question_bank (title, description, picture, userId)
 VALUES ('JavaScript 基础', '包含 JavaScript 的基础知识题目',
-        'https://pic.code-nav.cn/mianshiya/question_bank_picture/1777886594896760834/JldkWf9w_JavaScript.png', 1),
+        'https://pic.code-nav.cn/mianshigua/question_bank_picture/1777886594896760834/JldkWf9w_JavaScript.png', 1),
        ('CSS 样式', '包含 CSS 相关的样式问题',
-        'https://pic.code-nav.cn/mianshiya/question_bank_picture/1777886594896760834/QatnFmEN_CSS.png', 2),
-       ('HTML 基础', 'HTML 标记语言的基本知识', 'https://www.mianshiya.com/logo.png', 3),
-       ('前端框架', 'React, Vue, Angular 等框架相关的题目', 'https://www.mianshiya.com/logo.png', 1),
-       ('算法与数据结构', '数据结构和算法题目', 'https://www.mianshiya.com/logo.png', 2),
-       ('数据库原理', 'SQL 语句和数据库设计', 'https://www.mianshiya.com/logo.png', 3),
-       ('操作系统', '操作系统的基本概念', 'https://www.mianshiya.com/logo.png', 1),
-       ('网络协议', 'HTTP, TCP/IP 等网络协议题目', 'https://www.mianshiya.com/logo.png', 2),
-       ('设计模式', '常见设计模式及其应用', 'https://www.mianshiya.com/logo.png', 3),
-       ('编程语言概述', '多种编程语言的基础知识', 'https://www.mianshiya.com/logo.png', 1),
-       ('版本控制', 'Git 和 SVN 的使用', 'https://www.mianshiya.com/logo.png', 2),
-       ('安全与加密', '网络安全和加密技术', 'https://www.mianshiya.com/logo.png', 3),
-       ('云计算', '云服务和架构', 'https://www.mianshiya.com/logo.png', 1),
-       ('微服务架构', '微服务的设计与实现', 'https://www.mianshiya.com/logo.png', 2),
-       ('容器技术', 'Docker 和 Kubernetes 相关知识', 'https://www.mianshiya.com/logo.png', 3),
-       ('DevOps 实践', '持续集成与持续交付', 'https://www.mianshiya.com/logo.png', 1),
-       ('数据分析', '数据分析和可视化', 'https://www.mianshiya.com/logo.png', 2),
-       ('人工智能', '机器学习与深度学习基础', 'https://www.mianshiya.com/logo.png', 3),
-       ('区块链技术', '区块链的基本原理和应用', 'https://www.mianshiya.com/logo.png', 1),
-       ('项目管理', '软件开发项目的管理和执行', 'https://www.mianshiya.com/logo.png', 2);
+        'https://pic.code-nav.cn/mianshigua/question_bank_picture/1777886594896760834/QatnFmEN_CSS.png', 2),
+       ('HTML 基础', 'HTML 标记语言的基本知识', 'https://www.mianshigua.com/logo.png', 3),
+       ('前端框架', 'React, Vue, Angular 等框架相关的题目', 'https://www.mianshigua.com/logo.png', 1),
+       ('算法与数据结构', '数据结构和算法题目', 'https://www.mianshigua.com/logo.png', 2),
+       ('数据库原理', 'SQL 语句和数据库设计', 'https://www.mianshigua.com/logo.png', 3),
+       ('操作系统', '操作系统的基本概念', 'https://www.mianshigua.com/logo.png', 1),
+       ('网络协议', 'HTTP, TCP/IP 等网络协议题目', 'https://www.mianshigua.com/logo.png', 2),
+       ('设计模式', '常见设计模式及其应用', 'https://www.mianshigua.com/logo.png', 3),
+       ('编程语言概述', '多种编程语言的基础知识', 'https://www.mianshigua.com/logo.png', 1),
+       ('版本控制', 'Git 和 SVN 的使用', 'https://www.mianshigua.com/logo.png', 2),
+       ('安全与加密', '网络安全和加密技术', 'https://www.mianshigua.com/logo.png', 3),
+       ('云计算', '云服务和架构', 'https://www.mianshigua.com/logo.png', 1),
+       ('微服务架构', '微服务的设计与实现', 'https://www.mianshigua.com/logo.png', 2),
+       ('容器技术', 'Docker 和 Kubernetes 相关知识', 'https://www.mianshigua.com/logo.png', 3),
+       ('DevOps 实践', '持续集成与持续交付', 'https://www.mianshigua.com/logo.png', 1),
+       ('数据分析', '数据分析和可视化', 'https://www.mianshigua.com/logo.png', 2),
+       ('人工智能', '机器学习与深度学习基础', 'https://www.mianshigua.com/logo.png', 3),
+       ('区块链技术', '区块链的基本原理和应用', 'https://www.mianshigua.com/logo.png', 1),
+       ('项目管理', '软件开发项目的管理和执行', 'https://www.mianshigua.com/logo.png', 2);
 
 -- 题目表初始数据
 INSERT INTO question (title, content, tags, answer, userId)
