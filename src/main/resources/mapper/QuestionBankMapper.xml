@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ling.mianshigua.mapper.QuestionBankMapper">
 
-    <resultMap id="BaseResultMap" type="generator.domain.QuestionBank">
+    <resultMap id="BaseResultMap" type="com.ling.mianshigua.model.entity.QuestionBank">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="title" column="title" jdbcType="VARCHAR"/>
             <result property="description" column="description" jdbcType="VARCHAR"/>
