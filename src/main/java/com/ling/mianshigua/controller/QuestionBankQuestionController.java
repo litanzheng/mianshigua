@@ -1,5 +1,7 @@
 package com.ling.mianshigua.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ling.mianshigua.annotation.AuthCheck;
 import com.ling.mianshigua.common.BaseResponse;
@@ -11,6 +13,7 @@ import com.ling.mianshigua.exception.BusinessException;
 import com.ling.mianshigua.exception.ThrowUtils;
 import com.ling.mianshigua.model.dto.questionBankQuestion.QuestionBankQuestionAddRequest;
 import com.ling.mianshigua.model.dto.questionBankQuestion.QuestionBankQuestionQueryRequest;
+import com.ling.mianshigua.model.dto.questionBankQuestion.QuestionBankQuestionRemoveRequest;
 import com.ling.mianshigua.model.dto.questionBankQuestion.QuestionBankQuestionUpdateRequest;
 import com.ling.mianshigua.model.entity.QuestionBankQuestion;
 import com.ling.mianshigua.model.entity.User;
@@ -58,6 +61,8 @@ public class QuestionBankQuestionController {
         BeanUtils.copyProperties(questionBankQuestionAddRequest, questionBankQuestion);
         // 数据校验
         questionBankQuestionService.validQuestionBankQuestion(questionBankQuestion, true);
+
+
         // todo 填充默认值
         User loginUser = userService.getLoginUser(request);
         questionBankQuestion.setUserId(loginUser.getId());
@@ -202,5 +207,19 @@ public class QuestionBankQuestionController {
         return ResultUtils.success(questionBankQuestionService.getQuestionBankQuestionVOPage(questionBankQuestionPage, request));
     }
 
+    @PostMapping("/remove")
+    public BaseResponse<Boolean> removeQuestionBankQuestion(@RequestBody QuestionBankQuestionRemoveRequest removeRequest) {
+        if (removeRequest == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Long questionBankId = removeRequest.getQuestionBankId();
+        Long questionId = removeRequest.getQuestionId();
+        LambdaQueryWrapper<QuestionBankQuestion> wrapper = Wrappers.lambdaQuery(QuestionBankQuestion.class)
+                .eq(QuestionBankQuestion::getQuestionBankId, questionBankId)
+                .eq(QuestionBankQuestion::getQuestionId, questionId);
+        // 操作数据库
+        boolean result = questionBankQuestionService.remove(wrapper);
+        return ResultUtils.success(result);
+    }
     // endregion
 }

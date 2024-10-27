@@ -73,8 +73,9 @@ public class QuestionBankQuestionServiceImpl extends ServiceImpl<QuestionBankQue
         Long questionBankId = questionBankQuestion.getQuestionBankId();
         if (questionBankId==null) {
             QuestionBank questionBank = questionBankService.getById(questionBankId);
-            ThrowUtils.throwIf(questionBank==null, ErrorCode.NOT_FOUND_ERROR, "题目不存在");
+            ThrowUtils.throwIf(questionBank==null, ErrorCode.NOT_FOUND_ERROR, "题库不存在");
         }
+
     }
 
     /**
