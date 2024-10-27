@@ -1,18 +1,24 @@
 package com.ling.mianshigua.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ling.mianshigua.common.BaseResponse;
 import com.ling.mianshigua.common.ErrorCode;
+import com.ling.mianshigua.common.ResultUtils;
 import com.ling.mianshigua.constant.CommonConstant;
 import com.ling.mianshigua.exception.ThrowUtils;
 import com.ling.mianshigua.mapper.QuestionMapper;
 import com.ling.mianshigua.model.dto.question.QuestionQueryRequest;
 import com.ling.mianshigua.model.entity.Question;
+import com.ling.mianshigua.model.entity.QuestionBankQuestion;
 import com.ling.mianshigua.model.entity.User;
 import com.ling.mianshigua.model.vo.QuestionVO;
 import com.ling.mianshigua.model.vo.UserVO;
+import com.ling.mianshigua.service.QuestionBankQuestionService;
 import com.ling.mianshigua.service.QuestionService;
 import com.ling.mianshigua.service.UserService;
 import com.ling.mianshigua.utils.SqlUtils;
@@ -42,6 +48,9 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     @Resource
     private UserService userService;
 
+
+    @Resource
+    private QuestionBankQuestionService questionBankQuestionService;
     /**
      * 校验数据
      *
@@ -188,6 +197,33 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
 
         questionVOPage.setRecords(questionVOList);
         return questionVOPage;
+    }
+
+    @Override
+    public Page<Question> listQuestionByPage(QuestionQueryRequest questionQueryRequest) {
+        long current = questionQueryRequest.getCurrent();
+        long size = questionQueryRequest.getPageSize();
+
+        //题目表的查询条件
+        QueryWrapper<Question> queryWrapper = this.getQueryWrapper(questionQueryRequest);
+        //根据题库查询题目列表
+        Long questionBankId = questionQueryRequest.getQuestionBankId();
+        if (questionBankId != null) {
+            LambdaQueryWrapper<QuestionBankQuestion> wrapper = Wrappers.lambdaQuery(QuestionBankQuestion.class)
+                    .select(QuestionBankQuestion::getQuestionId)
+                    .eq(QuestionBankQuestion::getQuestionBankId, questionBankId);
+            List<QuestionBankQuestion> questionList = questionBankQuestionService.list(wrapper);
+            if (CollUtil.isNotEmpty(questionList)) {
+                Set<Long> questionIdList = questionList.stream().map(QuestionBankQuestion::getQuestionId).collect(Collectors.toSet());
+                queryWrapper.in("id",questionIdList);
+            }
+        }
+        // 限制爬虫
+        ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
+        // 查询数据库
+        Page<Question> questionPage = this.page(new Page<>(current, size),
+                queryWrapper);
+        return questionPage;
     }
 
 }
