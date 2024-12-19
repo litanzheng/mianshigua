@@ -13,10 +13,7 @@ import com.ling.mianshigua.common.ResultUtils;
 import com.ling.mianshigua.constant.UserConstant;
 import com.ling.mianshigua.exception.BusinessException;
 import com.ling.mianshigua.exception.ThrowUtils;
-import com.ling.mianshigua.model.dto.question.QuestionAddRequest;
-import com.ling.mianshigua.model.dto.question.QuestionEditRequest;
-import com.ling.mianshigua.model.dto.question.QuestionQueryRequest;
-import com.ling.mianshigua.model.dto.question.QuestionUpdateRequest;
+import com.ling.mianshigua.model.dto.question.*;
 import com.ling.mianshigua.model.entity.Question;
 import com.ling.mianshigua.model.entity.QuestionBank;
 import com.ling.mianshigua.model.entity.QuestionBankQuestion;
@@ -258,5 +255,12 @@ public class QuestionController {
         // 查询数据库（作为没有 ES 的降级方案）
         Page<Question> questionPage = questionService.listQuestionByPage(questionQueryRequest);
         return ResultUtils.success(questionService.getQuestionVOPage(questionPage, request));
+    }
+
+    @PostMapping("/delete/batch")
+    public BaseResponse<Boolean> batchDeleteQuestions(@RequestBody QuestionBatchDeleteRequest questionBatchDeleteRequest) {
+        ThrowUtils.throwIf(questionBatchDeleteRequest == null, ErrorCode.PARAMS_ERROR);
+        questionService.batchDeleteQuestions(questionBatchDeleteRequest.getQuestionIdList());
+        return ResultUtils.success(true);
     }
 }
